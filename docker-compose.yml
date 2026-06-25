@@ -1,0 +1,47 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: mutuaapi-nginx
+
+    # expose:
+    #   - "80"
+
+    volumes:
+      - ./api:/var/www/api
+      - ./docker/nginx:/etc/nginx/conf.d
+
+    depends_on:
+      - api
+
+    networks:
+      - web
+      - internal
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mutuaapi.rule=Host(`mutuaapi.alvaro220592-vps01.vps-kinghost.net`)"
+      - "traefik.http.routers.mutuaapi.entrypoints=websecure"
+      - "traefik.http.routers.mutuaapi.tls.certresolver=le"
+      - "traefik.http.services.mutuaapi.loadbalancer.server.port=80"
+      - "traefik.docker.network=web"
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+
+    container_name: mutuaapi
+
+    volumes:
+      - ./api:/var/www/api       # seu código continua sincronizado
+      - /var/www/api/node_modules  # node_modules permanece dentro do container, rápido
+
+    networks:
+      - internal
+
+networks:
+  web:
+    external: true
+
+  internal:
+    driver: bridge

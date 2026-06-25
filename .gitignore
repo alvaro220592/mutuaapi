@@ -1,0 +1,14 @@
+# Variáveis de ambiente do Docker (se existirem)
+docker/.env
+.env
+
+# Overrides locais do Docker Compose
+docker-compose.override.yml
+
+# Dados persistidos de bancos e serviços (se você criar depois)
+docker/mysql/
+docker/postgres/
+docker/redis/
+
+# Logs
+*.log
