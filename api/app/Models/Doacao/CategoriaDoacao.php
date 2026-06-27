@@ -8,5 +8,7 @@ class CategoriaDoacao extends Model
 {
     protected $table = 'categorias_doacao';
 
-    protected $fillable = ['nome', 'descricao'];
+    protected $fillable = ['nome', 'ativo'];
+
+    public const ID_OUTROS = 15;
 }

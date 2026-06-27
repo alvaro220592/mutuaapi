@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Doacao\{
+    CategoriaDoacaoController,
+    DoacaoController,
+};
 use App\Http\Controllers\Api\ModuloController;
 use App\Http\Controllers\Api\UsuarioController;
 use Illuminate\Http\Request;
@@ -33,4 +37,13 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     });
 
     Route::get('/modulos', [ModuloController::class, 'index'])->name('modulos.index');
+
+    Route::group(['prefix' => 'doacoes'], function(){
+        Route::group(['prefix' => 'categorias'], function(){
+            Route::get('/', [CategoriaDoacaoController::class, 'index'])->name('doacoes.categorias.index');
+        });
+
+        Route::get('/', [DoacaoController::class, 'index'])->name('doacoes.index');
+        Route::post('/novo', [DoacaoController::class, 'novo'])->name('doacoes.novo');
+    });
 });

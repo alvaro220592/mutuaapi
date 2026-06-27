@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categorias_doacao', function (Blueprint $table) {
+        Schema::create('perfis_doacao', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->boolean('ativo')->default(1);
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias_doacao');
+        Schema::dropIfExists('perfis_doacao');
     }
 };

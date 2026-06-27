@@ -13,7 +13,7 @@ class CategoriaDoacaoSeeder extends Seeder
      */
     public function run(): void
     {
-        $nomesCategorias = [
+        $nomes = [
             "Alimentos",
             "Roupas e calçados",
             "Móveis",
@@ -31,10 +31,10 @@ class CategoriaDoacaoSeeder extends Seeder
             "Outros"
         ];
 
-        foreach($nomesCategorias as $nome){
-            $categoriaEXistente = CategoriaDoacao::where(['nome', $nome])->first();
+        foreach($nomes as $nome){
+            $registroEXistente = CategoriaDoacao::where(['nome', $nome])->first();
 
-            if (!$categoriaEXistente) {
+            if (!$registroEXistente) {
                 CategoriaDoacao::create([
                     'nome' => $nome
                 ]);
