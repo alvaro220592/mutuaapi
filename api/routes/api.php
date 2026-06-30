@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Doacao\{
     CategoriaDoacaoController,
-    DoacaoController,
+    DoacaoSolicitadaController,
 };
 use App\Http\Controllers\Api\ModuloController;
 use App\Http\Controllers\Api\UsuarioController;
@@ -28,8 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             return $request->user();
         });        
 
-        Route::get('/info-perfil', [UsuarioController::class, 'info'])->name('user.info');
-        Route::post('/salvar-perfil', [UsuarioController::class, 'update'])->name('user.update');
+        Route::get('/info-usuario', [UsuarioController::class, 'info'])->name('user.info');
+        Route::post('/update', [UsuarioController::class, 'update'])->name('user.update');
     });
 
     Route::get('/me', function (Request $request) {
@@ -43,7 +43,13 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             Route::get('/', [CategoriaDoacaoController::class, 'index'])->name('doacoes.categorias.index');
         });
 
-        Route::get('/', [DoacaoController::class, 'index'])->name('doacoes.index');
-        Route::post('/novo', [DoacaoController::class, 'novo'])->name('doacoes.novo');
+        Route::group(['prefix' => 'solicitadas'], function(){
+            Route::get('/', [DoacaoSolicitadaController::class, 'index'])->name('doacoes.solicitadas.index');
+            Route::post('/store', [DoacaoSolicitadaController::class, 'store'])->name('doacoes.solicitadas.store');
+            Route::post('/mudar-status', [DoacaoSolicitadaController::class, 'mudarStatus'])->name('doacoes.solicitadas.mudarStatus');
+            Route::get('/edit/{id}', [DoacaoSolicitadaController::class, 'edit'])->name('doacoes.solicitadas.edit');
+            Route::post('/update/{id}', [DoacaoSolicitadaController::class, 'update'])->name('doacoes.solicitadas.update');
+            Route::delete('/delete/{id}', [DoacaoSolicitadaController::class, 'delete'])->name('doacoes.solicitadas.delete');
+        });
     });
 });
