@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Doacao\{
-    CategoriaDoacaoController,
+    CategoriaDoacaoController, DoacaoController,
     DoacaoSolicitadaController,
 };
 use App\Http\Controllers\Api\ModuloController;
@@ -43,13 +43,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             Route::get('/', [CategoriaDoacaoController::class, 'index'])->name('doacoes.categorias.index');
         });
 
+        Route::post('/mudar-status', [DoacaoController::class, 'mudarStatus'])->name('doacoes.mudarStatus');
+        Route::delete('/delete/{id}', [DoacaoController::class, 'delete'])->name('doacoes.delete');
+        Route::get('/buscar-doacao/{id}', [DoacaoController::class, 'edit'])->name('doacoes.edit');
+
         Route::group(['prefix' => 'solicitadas'], function(){
             Route::get('/', [DoacaoSolicitadaController::class, 'index'])->name('doacoes.solicitadas.index');
             Route::post('/store', [DoacaoSolicitadaController::class, 'store'])->name('doacoes.solicitadas.store');
-            Route::post('/mudar-status', [DoacaoSolicitadaController::class, 'mudarStatus'])->name('doacoes.solicitadas.mudarStatus');
-            Route::get('/edit/{id}', [DoacaoSolicitadaController::class, 'edit'])->name('doacoes.solicitadas.edit');
             Route::post('/update/{id}', [DoacaoSolicitadaController::class, 'update'])->name('doacoes.solicitadas.update');
-            Route::delete('/delete/{id}', [DoacaoSolicitadaController::class, 'delete'])->name('doacoes.solicitadas.delete');
         });
     });
 });

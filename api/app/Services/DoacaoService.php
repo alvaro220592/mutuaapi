@@ -12,7 +12,7 @@ class DoacaoService
             with('categoria_doacao')
             ->where('user_id', auth()->id())
             ->where('perfil_doacao_id', $perfilDoacaoId)
-            ->get();
+            ->paginate(10);
     }
 
     public function criar(array $dados, int $perfilDoacaoId): Doacao
