@@ -14,9 +14,75 @@ class DoacaoController extends Controller
 {
     public function __construct(private DoacaoService $doacaoService) {}
     
+    public function index () {
+        try {
+            $doacoes = $this->doacaoService->listar();
+
+            return response()->json([
+                'doacoes' => $doacoes,
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.'
+            ], 500);
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $dados = $request->validate(
+            [
+                'categoria_doacao_id' => ['required'],
+                'perfil_doacao_id' => ['required'],
+                'user_id' => ['required'],
+                'detalhes' => [
+                    Rule::requiredIf($request->categoria_doacao_id == CategoriaDoacao::ID_OUTROS),
+                    'nullable',
+                    'string',
+                    'max:500',
+                ],
+            ],
+            [
+                'categoria_doacao_id.required' => 'Selecione uma categoria',
+                'perfil_doacao_id.required' => 'Selecione um perfil para a doação',
+                'user_id.required' => 'Selecione um usuário',
+                'detalhes.required' => 'Para este tipo de doação, os detalhes são obrigatórios',
+            ]
+        );
+
+        try {
+            $this->doacaoService->criar($dados, $request->perfil_doacao_id);
+
+            return response()->json([
+                'message' => 'Doação cadastrada com sucesso.'
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.'
+            ], 500);
+        }
+    }
+
+    public function update (Request $request, $id) {
+        try {
+            $this->doacaoService->atualizar($request->all(), $id);
+            
+            return response()->json([
+                'message' => 'Doação editada com sucesso.'
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.'
+            ], 500);
+        }
+    }
+
     public function edit ($id) {
         return response()->json([
-            'doacao' => Doacao::find($id)
+            'doacao' => Doacao::with('categoria_doacao', 'usuario')->find($id)
         ]);
     }
 
@@ -45,6 +111,20 @@ class DoacaoController extends Controller
             ]);
 
         
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.'
+            ], 500);
+        }
+    }
+
+    public function perfisDoacao () {
+        try {
+            $perfisDoacao = $this->doacaoService->perfisDoacao();
+            return response()->json([
+                'perfisDoacao' => $perfisDoacao
+            ]);
+
         } catch (\Throwable $e) {
             return response()->json([
                 'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.'

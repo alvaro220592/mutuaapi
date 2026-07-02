@@ -2,6 +2,7 @@
 
 namespace App\Models\Doacao;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Doacao extends Model
@@ -18,5 +19,9 @@ class Doacao extends Model
 
     public function categoria_doacao () {
         return $this->belongsTo(CategoriaDoacao::class, 'categoria_doacao_id');
+    }
+
+    public function usuario () {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

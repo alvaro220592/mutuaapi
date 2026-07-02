@@ -195,4 +195,12 @@ class UsuarioController extends Controller
             'usuario' => $usuario
         ]);
     }
+
+    public function todos () {
+        $usuarios = User::all();
+
+        return response()->json([
+            'usuarios' => $usuarios
+        ]);
+    }
 }

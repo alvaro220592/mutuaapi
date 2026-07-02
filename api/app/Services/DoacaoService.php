@@ -3,16 +3,21 @@
 namespace App\Services;
 
 use App\Models\Doacao\Doacao;
+use App\Models\Doacao\PerfilDoacao;
 
 class DoacaoService
 {
-    public function listar (int $perfilDoacaoId) {
+    public function listar (?int $perfilDoacaoId = null) {
         
-        return Doacao::
-            with('categoria_doacao')
-            ->where('user_id', auth()->id())
-            ->where('perfil_doacao_id', $perfilDoacaoId)
-            ->paginate(10);
+        $doacoes = Doacao::with('categoria_doacao', 'usuario');
+
+        if ($perfilDoacaoId) {
+            $doacoes = $doacoes->where('perfil_doacao_id', $perfilDoacaoId);
+        }
+        
+        $doacoes = $doacoes->paginate(10);
+
+        return $doacoes;
     }
 
     public function criar(array $dados, int $perfilDoacaoId): Doacao
@@ -32,6 +37,8 @@ class DoacaoService
         $doacao->update([
             'detalhes' => $dados['detalhes'] ?? null,
             'categoria_doacao_id' => $dados['categoria_doacao_id'],
+            'perfil_doacao_id' => $dados['perfil_doacao_id'],
+            'user_id' => $dados['user_id'],
         ]);
 
         return $doacao;
@@ -48,5 +55,9 @@ class DoacaoService
     public function excluir (int $id) {
         $doacao = Doacao::find($id);
         $doacao->delete();
+    }
+
+    public function perfisDoacao () {
+        return PerfilDoacao::all();
     }
 }

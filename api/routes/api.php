@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::get('/info-usuario', [UsuarioController::class, 'info'])->name('user.info');
         Route::post('/update', [UsuarioController::class, 'update'])->name('user.update');
+        Route::get('/todos', [UsuarioController::class, 'todos'])->name('user.todos');
     });
 
     Route::get('/me', function (Request $request) {
@@ -49,12 +50,20 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::delete('/delete/{id}', [DoacaoController::class, 'delete'])->name('doacoes.delete');
         Route::get('/buscar-doacao/{id}', [DoacaoController::class, 'edit'])->name('doacoes.edit');
 
+        // Todos os perfis de doações
+        Route::get('/', [DoacaoController::class, 'index'])->name('doacoes.index');
+        Route::post('/store', [DoacaoController::class, 'store'])->name('doacoes.store');
+        Route::post('/update/{id}', [DoacaoController::class, 'update'])->name('doacoes.update');
+        Route::get('/perfis-doacao', [DoacaoController::class, 'perfisDoacao'])->name('doacoes.perfisDoacao');
+
+        // solicitadas
         Route::group(['prefix' => 'solicitadas'], function(){
             Route::get('/', [DoacaoSolicitadaController::class, 'index'])->name('doacoes.solicitadas.index');
             Route::post('/store', [DoacaoSolicitadaController::class, 'store'])->name('doacoes.solicitadas.store');
             Route::post('/update/{id}', [DoacaoSolicitadaController::class, 'update'])->name('doacoes.solicitadas.update');
         });
         
+        // oferecidas
         Route::group(['prefix' => 'oferecidas'], function(){
             Route::get('/', [DoacaoOferecidaController::class, 'index'])->name('doacoes.oferecidas.index');
             Route::post('/store', [DoacaoOferecidaController::class, 'store'])->name('doacoes.oferecidas.store');
