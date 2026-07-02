@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Doacao\{
-    CategoriaDoacaoController, DoacaoController,
+    CategoriaDoacaoController,
+    DoacaoController,
+    DoacaoOferecidaController,
     DoacaoSolicitadaController,
 };
 use App\Http\Controllers\Api\ModuloController;
@@ -51,6 +53,12 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             Route::get('/', [DoacaoSolicitadaController::class, 'index'])->name('doacoes.solicitadas.index');
             Route::post('/store', [DoacaoSolicitadaController::class, 'store'])->name('doacoes.solicitadas.store');
             Route::post('/update/{id}', [DoacaoSolicitadaController::class, 'update'])->name('doacoes.solicitadas.update');
+        });
+        
+        Route::group(['prefix' => 'oferecidas'], function(){
+            Route::get('/', [DoacaoOferecidaController::class, 'index'])->name('doacoes.oferecidas.index');
+            Route::post('/store', [DoacaoOferecidaController::class, 'store'])->name('doacoes.oferecidas.store');
+            Route::post('/update/{id}', [DoacaoOferecidaController::class, 'update'])->name('doacoes.oferecidas.update');
         });
     });
 });
