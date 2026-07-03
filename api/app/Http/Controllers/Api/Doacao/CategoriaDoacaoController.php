@@ -10,7 +10,7 @@ class CategoriaDoacaoController extends Controller
 {
     public function index () {
         try {
-            $categorias = CategoriaDoacao::where('ativo', 1)->get();
+            $categorias = CategoriaDoacao::where('ativo', 1)->orderBy('nome')->get();
             
             return response()->json([
                 'categorias' => $categorias,

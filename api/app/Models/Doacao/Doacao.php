@@ -17,8 +17,12 @@ class Doacao extends Model
         'user_id',
     ];
 
-    public function categoria_doacao () {
+    public function categoria () {
         return $this->belongsTo(CategoriaDoacao::class, 'categoria_doacao_id');
+    }
+
+    public function perfil () {
+        return $this->belongsTo(PerfilDoacao::class, 'perfil_doacao_id');
     }
 
     public function usuario () {

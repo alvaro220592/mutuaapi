@@ -9,7 +9,7 @@ class DoacaoService
 {
     public function listar (?int $perfilDoacaoId = null) {
         
-        $doacoes = Doacao::with('categoria_doacao', 'usuario');
+        $doacoes = Doacao::with('categoria', 'perfil', 'usuario.endereco', 'usuario.telefone');
 
         if ($perfilDoacaoId) {
             $doacoes = $doacoes->where('perfil_doacao_id', $perfilDoacaoId);
@@ -26,7 +26,7 @@ class DoacaoService
             'detalhes' => $dados['detalhes'] ?? null,
             'categoria_doacao_id' => $dados['categoria_doacao_id'],
             'perfil_doacao_id' => $perfilDoacaoId,
-            'user_id' => auth()->id(),
+            'user_id' => isset($dados['user_id']) ? $dados['user_id'] : auth()->id(),
         ]);
     }
 

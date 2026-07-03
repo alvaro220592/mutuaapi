@@ -17,7 +17,7 @@ class PerfilDoacaoSeeder extends Seeder
         $nomes = ['oferecida', 'solicitada'];
 
         foreach($nomes as $nome){
-            $registroEXistente = PerfilDoacao::where(['nome', $nome])->first();
+            $registroEXistente = PerfilDoacao::where('nome', $nome)->first();
 
             if (!$registroEXistente) {
                 PerfilDoacao::create([

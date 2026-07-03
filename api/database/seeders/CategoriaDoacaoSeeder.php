@@ -32,7 +32,7 @@ class CategoriaDoacaoSeeder extends Seeder
         ];
 
         foreach($nomes as $nome){
-            $registroEXistente = CategoriaDoacao::where(['nome', $nome])->first();
+            $registroEXistente = CategoriaDoacao::where('nome', $nome)->first();
 
             if (!$registroEXistente) {
                 CategoriaDoacao::create([

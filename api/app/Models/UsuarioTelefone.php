@@ -8,12 +8,5 @@ class UsuarioTelefone extends Model
 {
     protected $table = 'usuarios_telefones';
 
-    protected $fillable = [
-        'nome',
-        'slug',
-        'descricao',
-        'icone',
-        'ativo',
-        'ordem_exibicao',
-    ];
+    protected $fillable = ['telefone', 'user_id'];
 }

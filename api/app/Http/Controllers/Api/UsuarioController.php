@@ -17,9 +17,12 @@ class UsuarioController extends Controller
     public function index()
     {
         try {
-            return response()->json([
+            $usuarios = User::orderBy('name')->get();
 
+            return response()->json([
+                'usuarios' => $usuarios
             ]);
+            
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -193,14 +196,6 @@ class UsuarioController extends Controller
 
         return response()->json([
             'usuario' => $usuario
-        ]);
-    }
-
-    public function todos () {
-        $usuarios = User::all();
-
-        return response()->json([
-            'usuarios' => $usuarios
         ]);
     }
 }

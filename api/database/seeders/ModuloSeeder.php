@@ -28,15 +28,15 @@ class ModuloSeeder extends Seeder
                 'descricao' => 'Adote ou divulgue para adoção',
                 'icone' => 'pets',
                 'ordem_exibicao' => 2,
-                'ativo' => true,
+                'ativo' => false, // por enquanto
             ],
             [
                 'nome' => 'Pessoas desaparecidas',
                 'slug' => 'pessoas-desaparecidas',
                 'descricao' => 'Uma pessoa desapareceu ou foi encontrada',
-                'icone' => 'person_alert',
+                'icone' => 'person_search',
                 'ordem_exibicao' => 3,
-                'ativo' => true,
+                'ativo' => false, // por enquanto
             ],
             [
                 'nome' => 'Animais desaparecidos',
@@ -44,7 +44,7 @@ class ModuloSeeder extends Seeder
                 'descricao' => 'Um animal desapareceu ou foi encontrado',
                 'icone' => 'report',
                 'ordem_exibicao' => 4,
-                'ativo' => true,
+                'ativo' => false, // por enquanto
             ],
         ];
 

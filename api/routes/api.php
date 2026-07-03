@@ -30,9 +30,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             return $request->user();
         });        
 
+        Route::get('/todos', [UsuarioController::class, 'index'])->name('user.index');
         Route::get('/info-usuario', [UsuarioController::class, 'info'])->name('user.info');
         Route::post('/update', [UsuarioController::class, 'update'])->name('user.update');
-        Route::get('/todos', [UsuarioController::class, 'todos'])->name('user.todos');
     });
 
     Route::get('/me', function (Request $request) {
