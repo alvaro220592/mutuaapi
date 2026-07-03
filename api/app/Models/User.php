@@ -10,13 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable(['name', 'email', 'password', 'google_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
+
+    protected $appends = ['is_admin'];
 
     /**
      * Get the attributes that should be cast.
@@ -39,7 +42,9 @@ class User extends Authenticatable
         return $this->belongsTo(Endereco::class, 'endereco_id');
     }
 
-    public function admin () {
-        return $this->roles[0]->name == 'admin';
+    // atribui verdadeiro ou falso à propriedade 'is_admin' aqui da model, que foi agregada ao usuário
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->hasRole('admin');
     }
 }
