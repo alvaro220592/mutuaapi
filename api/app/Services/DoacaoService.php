@@ -2,17 +2,38 @@
 
 namespace App\Services;
 
+use App\Models\Doacao\CategoriaDoacao;
 use App\Models\Doacao\Doacao;
 use App\Models\Doacao\PerfilDoacao;
 
 class DoacaoService
 {
-    public function listar (?int $perfilDoacaoId = null) {
+    public function listar ($filtros) {
         
         $doacoes = Doacao::with('categoria', 'perfil', 'usuario.endereco', 'usuario.telefone');
 
-        if ($perfilDoacaoId) {
-            $doacoes = $doacoes->where('perfil_doacao_id', $perfilDoacaoId);
+        if (isset($filtros['statusAtivo'])) {
+            $statusAtivo = filter_var(
+                $filtros['statusAtivo'],
+                FILTER_VALIDATE_BOOLEAN
+            );
+            if (empty($statusAtivo)) {
+                $doacoes = $doacoes->where('ativo', 0);
+            } else {
+                $doacoes = $doacoes->where('ativo', 1);
+            }
+        }
+
+        if (isset($filtros['perfil'])) {
+            if ((int)$filtros['perfil'] != 0) {
+                $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil']);
+            }
+        }
+
+        if (isset($filtros['categoria'])) {
+            if ((int)$filtros['categoria'] != 0) {
+                $doacoes = $doacoes->where('categoria_doacao_id', $filtros['categoria']);
+            }
         }
         
         $doacoes = $doacoes->paginate(10);
@@ -59,5 +80,9 @@ class DoacaoService
 
     public function perfisDoacao () {
         return PerfilDoacao::all();
+    }
+
+    public function categoriasDoacao () {
+        return CategoriaDoacao::all();
     }
 }

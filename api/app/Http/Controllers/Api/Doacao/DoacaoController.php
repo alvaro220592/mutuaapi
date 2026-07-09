@@ -14,17 +14,21 @@ class DoacaoController extends Controller
 {
     public function __construct(private DoacaoService $doacaoService) {}
     
-    public function index () {
+    public function index (Request $request) {
         try {
-            $doacoes = $this->doacaoService->listar();
+            $doacoes = $this->doacaoService->listar($request->all());
+            $perfisDoacao = $this->doacaoService->perfisDoacao();
+            $categoriasDoacao = $this->doacaoService->categoriasDoacao();
 
             return response()->json([
                 'doacoes' => $doacoes,
+                'perfisDoacao' => $perfisDoacao,
+                'categoriasDoacao' => $categoriasDoacao,
             ]);
 
         } catch (\Throwable $e) {
             return response()->json([
-                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.'
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
             ], 500);
         }
     }
