@@ -22,7 +22,7 @@ class UsuarioController extends Controller
             return response()->json([
                 'usuarios' => $usuarios
             ]);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -177,8 +177,6 @@ class UsuarioController extends Controller
             }
         }
 
-
-
         return response()->json([
             'message' => 'Perfil atualizado',
             'user' => $usuario
@@ -186,10 +184,10 @@ class UsuarioController extends Controller
                 ->load('telefone')
                 ->load('endereco'),
         ]);
-
     }
 
-    public function info () {
+    public function info()
+    {
         $usuario = auth()->user();
         $usuario->load('telefone');
         $usuario->load('endereco');
@@ -197,5 +195,27 @@ class UsuarioController extends Controller
         return response()->json([
             'usuario' => $usuario
         ]);
+    }
+
+    public function excluirConta(Request $request)
+    {
+        try {
+            $request
+                ->user()
+                ->currentAccessToken()
+                ->delete();
+
+            auth()->user()->delete();
+
+            return response()->json([
+                'message' => 'Conta excluída com sucesso',
+
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Erro ao excluir. Entre em contato com a equipe de desenvolvimento',
+            ]);
+        }
     }
 }

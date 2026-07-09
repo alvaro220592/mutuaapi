@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('/todos', [UsuarioController::class, 'index'])->name('user.index');
         Route::get('/info-usuario', [UsuarioController::class, 'info'])->name('user.info');
         Route::post('/update', [UsuarioController::class, 'update'])->name('user.update');
+        Route::delete('/excluir-conta', [UsuarioController::class, 'excluirConta'])->name('user.excluir-conta');
     });
 
     Route::get('/me', function (Request $request) {
