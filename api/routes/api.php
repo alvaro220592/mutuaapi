@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Doacao\{
     DoacaoSolicitadaController,
 };
 use App\Http\Controllers\Api\ModuloController;
+use App\Http\Controllers\Api\PoliticaPrivacidadeController;
 use App\Http\Controllers\Api\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -71,4 +72,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             Route::post('/update/{id}', [DoacaoOferecidaController::class, 'update'])->name('doacoes.oferecidas.update');
         });
     });
+});
+
+Route::group(['prefix' => 'politica-privacidade'], function(){
+    Route::get('/atual', [PoliticaPrivacidadeController::class, 'atual'])->name('politica-privacidade.atual');
 });

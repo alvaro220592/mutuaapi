@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriaDoacaoSeeder::class);
         $this->call(PerfilDoacaoSeeder::class);
         $this->call(UsuarioTesteSeeder::class);
+        $this->call(PoliticaPrivacidadeSeeder::class);
     }
 }
