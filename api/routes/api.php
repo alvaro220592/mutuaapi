@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Doacao\{
 };
 use App\Http\Controllers\Api\ModuloController;
 use App\Http\Controllers\Api\PoliticaPrivacidadeController;
+use App\Http\Controllers\Api\TermoUsoController;
 use App\Http\Controllers\Api\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -76,4 +77,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
 Route::group(['prefix' => 'politica-privacidade'], function(){
     Route::get('/atual', [PoliticaPrivacidadeController::class, 'atual'])->name('politica-privacidade.atual');
+});
+
+Route::group(['prefix' => 'termo-uso'], function(){
+    Route::get('/atual', [TermoUsoController::class, 'atual'])->name('termo-uso.atual');
 });
