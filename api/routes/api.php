@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\ContatoUsuarioController;
 use App\Http\Controllers\Api\Doacao\{
     CategoriaDoacaoController,
     DoacaoController,
@@ -72,6 +73,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
             Route::post('/store', [DoacaoOferecidaController::class, 'store'])->name('doacoes.oferecidas.store');
             Route::post('/update/{id}', [DoacaoOferecidaController::class, 'update'])->name('doacoes.oferecidas.update');
         });
+    });
+
+    // Quando o usuário entra em contato com a equipe
+    Route::group(['prefix' => 'contato-usuario'], function(){
+        Route::post('/email', [ContatoUsuarioController::class, 'email'])->name('contato-usuario.email');
     });
 });
 
