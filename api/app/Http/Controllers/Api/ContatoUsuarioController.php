@@ -12,7 +12,7 @@ class ContatoUsuarioController extends Controller
 {
     public function email (Request $request) {
         try {
-            Mail::to('mutua-app@gmail.com')->send(new ContatoUsuarioMail($request->mensagem, auth()->user()));
+            Mail::to(config('mail.contato'))->send(new ContatoUsuarioMail($request->mensagem, auth()->user()));
             
             return response()->json([
                 'message' => 'Mensagem enviada com sucesso. Em breve retornaremos.'

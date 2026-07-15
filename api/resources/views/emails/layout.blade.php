@@ -23,7 +23,7 @@
                                 Mútua
                             </h1> --}}
 
-                            <img src="{{ $message->embed(public_path('img/logo-mutua-dark-sem-fundo.png')) }}" alt="Mútua" width="180">
+                            <img src="{{ $message->embed(public_path('img/logo-mutua.png')) }}" alt="Mútua" width="180">
 
                             <p style="margin:8px 0 0;color:#e8f1ff;font-size:14px;">
                                 Plataforma de apoio comunitário
