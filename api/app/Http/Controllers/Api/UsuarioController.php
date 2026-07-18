@@ -32,7 +32,9 @@ class UsuarioController extends Controller
 
     public function listarPaginados () {
         try {
-            $usuarios = User::orderBy('name')->paginate();
+            $usuarios = User::orderBy('name')->paginate(5);
+            $usuarios->load('telefone');
+            $usuarios->load('endereco');
 
             return response()->json([
                 'usuarios' => $usuarios
