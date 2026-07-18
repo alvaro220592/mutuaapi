@@ -34,11 +34,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function telefone () {
+    public function telefone()
+    {
         return $this->hasOne(UsuarioTelefone::class, 'user_id');
     }
 
-    public function endereco () {
+    public function endereco()
+    {
         return $this->belongsTo(Endereco::class, 'endereco_id');
     }
 
@@ -46,5 +48,23 @@ class User extends Authenticatable
     public function getIsAdminAttribute(): bool
     {
         return $this->hasRole('admin');
+    }
+
+    // se aceitou os ultimos politica de privacidade e os termos de uso
+    public function aceitouUltimosDocumentos()
+    {
+        $politicaPrivacidadeAtual = PoliticaPrivacidade::latest('id')->first();
+        $termoUsoAtual = TermoUso::latest('id')->first();
+
+        // Se ainda não existem documentos, considera como aceito
+        if (!$politicaPrivacidadeAtual || !$termoUsoAtual) {
+            return true;
+        }
+
+        return ConsentimentoDocumento::where([
+            'user_id' => auth()->id(),
+            'politica_privacidade_id' => $politicaPrivacidadeAtual->id,
+            'termo_uso_id' => $termoUsoAtual->id,
+        ])->exists();
     }
 }

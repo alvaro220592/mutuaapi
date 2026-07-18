@@ -13,15 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware
-        ->redirectGuestsTo(
-            fn () =>
-                response()
-                    ->json(
-                        ['message' => 'Unauthenticated.'],
-                        401
-                    )
+        $middleware->redirectGuestsTo(
+            fn () => response()->json(['message' => 'Unauthenticated.'],401)
         );
+
+        // verificação se o usuário já aceitou política de privacidade e termos de uso
+        $middleware->alias(['documentos' => \App\Http\Middleware\VerificarConsentimentoDocumentos::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

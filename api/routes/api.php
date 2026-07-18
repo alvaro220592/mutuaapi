@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\ConsentimentoDocumentoController;
 use App\Http\Controllers\Api\ContatoUsuarioController;
 use App\Http\Controllers\Api\Doacao\{
     CategoriaDoacaoController,
@@ -25,7 +26,7 @@ Route::group(['prefix' => 'auth'], function(){
 
 
 // Rotas autenticadas
-Route::group(['middleware' => 'auth:sanctum'], function(){
+Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
     Route::post('auth/logout', [AuthController::class, 'logout']);
 
     Route::group(['prefix' => 'user'], function(){
@@ -79,6 +80,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::group(['prefix' => 'contato-usuario'], function(){
         Route::post('/email', [ContatoUsuarioController::class, 'email'])->name('contato-usuario.email');
     });
+
+    Route::post('/consentimento/aceitar', [ConsentimentoDocumentoController::class, 'aceitar'])->name('consentimento.aceitar');
 });
 
 Route::group(['prefix' => 'politica-privacidade'], function(){

@@ -188,6 +188,7 @@ class UsuarioController extends Controller
 
     public function info()
     {
+        \Log::info('info');
         $usuario = auth()->user();
         $usuario->load('telefone');
         $usuario->load('endereco');
