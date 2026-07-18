@@ -29,6 +29,22 @@ class UsuarioController extends Controller
             ], 500);
         }
     }
+
+    public function listarPaginados () {
+        try {
+            $usuarios = User::orderBy('name')->paginate();
+
+            return response()->json([
+                'usuarios' => $usuarios
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function update(Request $request)
     {
         $dados = $request->validate([

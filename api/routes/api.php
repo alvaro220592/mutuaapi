@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
         });        
 
         Route::get('/todos', [UsuarioController::class, 'index'])->name('user.index');
+        Route::get('/listarPaginados', [UsuarioController::class, 'listarPaginados'])->name('user.listarPaginados');
         Route::get('/info-usuario', [UsuarioController::class, 'info'])->name('user.info');
         Route::post('/update', [UsuarioController::class, 'update'])->name('user.update');
         Route::delete('/excluir-conta', [UsuarioController::class, 'excluirConta'])->name('user.excluir-conta');

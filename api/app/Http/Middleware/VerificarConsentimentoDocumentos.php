@@ -25,7 +25,7 @@ class VerificarConsentimentoDocumentos
 
         $usuario = $request->user();
 
-        if (!$usuario) {
+        if (!$usuario || $usuario->is_admin) {
             return $next($request);
         }
 
