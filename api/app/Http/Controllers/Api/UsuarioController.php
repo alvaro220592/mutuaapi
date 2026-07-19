@@ -32,10 +32,29 @@ class UsuarioController extends Controller
 
     public function listarPaginados () {
         try {
-            $usuarios = User::orderBy('name')->paginate(5);
-            $usuarios->load('telefone');
-            $usuarios->load('endereco');
+            $usuarios = User::with(['telefone', 'endereco'])
+                ->orderBy('name');
 
+            $busca = request()->busca;
+
+            if ($busca) {
+                $usuarios->where(function ($query) use ($busca) {
+                    $query->where('name', 'like', "%{$busca}%")
+                        ->orWhere('email', 'like', "%{$busca}%")
+                        ->orWhereHas('telefone', function ($query) use ($busca) {
+                            $query->where('telefone', 'like', "%{$busca}%");
+                        })
+                        ->orWhereHas('endereco', function ($query) use ($busca) {
+                            $query->where('logradouro', 'like', "%{$busca}%")
+                                ->orWhere('numero', 'like', "%{$busca}%")
+                                ->orWhere('cidade', 'like', "%{$busca}%")
+                                ->orWhere('uf', 'like', "%{$busca}%");
+                        });
+                });
+            }
+
+            $usuarios = $usuarios->paginate(10);
+            
             return response()->json([
                 'usuarios' => $usuarios
             ]);
