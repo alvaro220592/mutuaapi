@@ -20,6 +20,11 @@ class AuthController extends Controller
         $credenciais = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ],
+        [
+            'email.required' => 'O e-mail é obrigatório',
+            'email.email' => 'E-mail iválido',
+            'password.required' => 'A senha é obrigatória',
         ]);
 
         $user = User::where('email', $credenciais['email'])->first();
@@ -126,6 +131,14 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
+        ],
+        [
+            'name.required' => 'O nome de usuário é obrigatório',
+            'email.required' => 'O e-mail é obrigatório',
+            'email.email' => 'E-mail iválido',
+            'email.unique' => 'Este e-mail já está cadastrado',
+            'password.required' => 'A senha é obrigatória',
+            'password.confirmed' => 'A confirmação da senha não confere',
         ]);
 
         $user = User::create([
@@ -161,6 +174,9 @@ class AuthController extends Controller
 
         $dados = $request->validate([
             'email' => 'required|email|exists:users,email'
+        ],
+        [
+            'email.required' => 'O e-mail é obrigatório',
         ]);
 
         $usuario = User::where('email', $dados['email'])->first();
@@ -202,6 +218,15 @@ class AuthController extends Controller
                 'min:8',
                 'confirmed',
             ],
+        ],
+        [
+            'email.required' => 'O e-mail é obrigatório',
+            'email.email' => 'E-mail iválido',
+            'codigo_recuperacao.required' => 'O código de verificação é obrigatório',
+            'password.required' => 'A senha é obrigatória',
+            'password.string' => 'A senha deve ser em formato de texto',
+            'password.min' => 'A senha deve ter no mínimo :min caracteres',
+            'password.confirmed' => 'A confirmação da senha não confere',
         ]);
 
         $codigoRecuperacao = CodigoRecuperacaoSenha::
