@@ -138,6 +138,7 @@ class AuthController extends Controller
             'email.email' => 'E-mail iválido',
             'email.unique' => 'Este e-mail já está cadastrado',
             'password.required' => 'A senha é obrigatória',
+            'password.min' => 'A senha deve ter no mínimo :min caracteres',
             'password.confirmed' => 'A confirmação da senha não confere',
         ]);
 
