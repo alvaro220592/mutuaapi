@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('versao');
             $table->text('conteudo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

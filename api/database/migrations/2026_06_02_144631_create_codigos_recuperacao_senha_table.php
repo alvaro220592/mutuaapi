@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->string('codigo_recuperacao', 6);
                 $table->timestamp('expira_em');
                 $table->timestamps();
+                $table->softDeletes();
             });
         }
     }

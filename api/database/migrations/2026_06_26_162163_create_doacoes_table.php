@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('perfil_doacao_id')->references('id')->on('perfis_doacao')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

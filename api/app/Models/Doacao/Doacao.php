@@ -4,9 +4,12 @@ namespace App\Models\Doacao;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Doacao extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'doacoes';
 
     protected $fillable = [
