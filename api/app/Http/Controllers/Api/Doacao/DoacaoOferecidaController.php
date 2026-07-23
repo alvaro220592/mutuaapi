@@ -16,7 +16,7 @@ class DoacaoOferecidaController extends Controller
 
     public function index () {
         try {
-            $doacoes = $this->doacaoService->listar(PerfilDoacao::ID_OFERECIDA);
+            $doacoes = $this->doacaoService->listar(['perfil_doacao_id' => PerfilDoacao::ID_OFERECIDA]);
 
             return response()->json([
                 'doacoes' => $doacoes,

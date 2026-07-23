@@ -10,7 +10,7 @@ class DoacaoService
 {
     public function listar ($filtros) {
         
-        $doacoes = Doacao::with('categoria', 'perfil', 'usuario.endereco', 'usuario.telefone');
+        $doacoes = Doacao::with('categoria', 'perfil', 'usuario.regiaoUsuario', 'usuario.telefone');
 
         if (isset($filtros['statusAtivo'])) {
             $statusAtivo = filter_var(
@@ -34,6 +34,15 @@ class DoacaoService
             if ((int)$filtros['categoria'] != 0) {
                 $doacoes = $doacoes->where('categoria_doacao_id', $filtros['categoria']);
             }
+        }
+        
+        if (!auth()->user()->is_admin) {
+            $doacoes = $doacoes->where('user_id', auth()->user()->id);
+        }
+            
+        if (isset($filtros['perfil_doacao_id'])) {
+            \Log::info($filtros['perfil_doacao_id']);
+            $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil_doacao_id']);
         }
         
         $doacoes = $doacoes->paginate(10);

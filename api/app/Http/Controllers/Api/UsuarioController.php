@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Endereco;
+use App\Models\RegiaoUsuario;
 use App\Models\User;
 use App\Models\UsuarioTelefone;
 use App\Services\CoordenadasService;
@@ -175,18 +176,15 @@ class UsuarioController extends Controller
                 }
             }
 
-            $endereco = $usuario->endereco;
+            $regiaoUsuario = $usuario->regiaoUsuario;
 
-            if (!$endereco) {
-                $endereco = new Endereco;
+            if (!$regiaoUsuario) {
+                $regiaoUsuario = new RegiaoUsuario();
             }
 
-            $endereco->cep = $dados['cep'];
-            $endereco->bairro = $dados['bairro'];
-            $endereco->cidade = $dados['cidade'];
-            $endereco->uf = $dados['uf'];
-
-
+            $regiaoUsuario->bairro = $dados['bairro'];
+            $regiaoUsuario->cidade = $dados['cidade'];
+            $regiaoUsuario->uf = $dados['uf'];
 
             $fullAddress =
                 $dados['bairro'] . ', ' .
@@ -196,14 +194,14 @@ class UsuarioController extends Controller
             $coordenadas = app(LocalizacaoService::class)->coordenadasPeloEndereco($fullAddress);
 
             if ($coordenadas) {
-                $endereco->latitude = $coordenadas['latitude'];
-                $endereco->longitude = $coordenadas['longitude'];
+                $regiaoUsuario->latitude = $coordenadas['latitude'];
+                $regiaoUsuario->longitude = $coordenadas['longitude'];
             }
 
-            $endereco->save();
+            $regiaoUsuario->save();
 
-            if (!$usuario->endereco_id) {
-                $usuario->endereco_id = $endereco->id;
+            if (!$usuario->regiao_usuario_id) {
+                $usuario->regiao_usuario_id = $regiaoUsuario->id;
                 $usuario->save();
             }
         }
