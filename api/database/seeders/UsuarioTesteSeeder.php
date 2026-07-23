@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Endereco;
-use App\Models\Modulo;
+use App\Models\RegiaoUsuario;
 use App\Models\User;
 use App\Models\UsuarioTelefone;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,12 +18,9 @@ class UsuarioTesteSeeder extends Seeder
         $usuariosTeste = [
             [
                 'nome' => 'joao_teste',
-                'endereco' => [
-                    'cep' => '06700-000',
-                    'logradouro' => 'Rua das Acacias',
-                    'numero' => '125',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Cotia',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.6031,
                     'longitude' => -46.9182,
@@ -33,12 +29,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'maria_teste',
-                'endereco' => [
-                    'cep' => '06701-000',
-                    'logradouro' => 'Rua dos Ipes',
-                    'numero' => '42',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Cotia',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5964,
                     'longitude' => -46.9229,
@@ -47,12 +40,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'pedro_teste',
-                'endereco' => [
-                    'cep' => '06702-000',
-                    'logradouro' => 'Rua Primavera',
-                    'numero' => '301',
-                    'complemento' => 'Casa',
+                'regiao_usuario' => [
                     'cidade' => 'Cotia',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5897,
                     'longitude' => -46.9285,
@@ -61,12 +51,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'ana_teste',
-                'endereco' => [
-                    'cep' => '06703-000',
-                    'logradouro' => 'Rua das Flores',
-                    'numero' => '88',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Cotia',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.6105,
                     'longitude' => -46.9114,
@@ -75,12 +62,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'carlos_teste',
-                'endereco' => [
-                    'cep' => '06704-000',
-                    'logradouro' => 'Rua dos Pinheiros',
-                    'numero' => '517',
-                    'complemento' => 'Apto 2',
+                'regiao_usuario' => [
                     'cidade' => 'Cotia',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.6076,
                     'longitude' => -46.9361,
@@ -89,12 +73,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'julia_teste',
-                'endereco' => [
-                    'cep' => '06730-000',
-                    'logradouro' => 'Rua Sao Pedro',
-                    'numero' => '14',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Vargem Grande Paulista',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.6038,
                     'longitude' => -47.0271,
@@ -103,12 +84,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'lucas_teste',
-                'endereco' => [
-                    'cep' => '06731-000',
-                    'logradouro' => 'Rua das Palmeiras',
-                    'numero' => '225',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Vargem Grande Paulista',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.6109,
                     'longitude' => -47.0158,
@@ -117,12 +95,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'fernanda_teste',
-                'endereco' => [
-                    'cep' => '06732-000',
-                    'logradouro' => 'Rua das Orquideas',
-                    'numero' => '73',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Vargem Grande Paulista',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5995,
                     'longitude' => -47.0357,
@@ -131,12 +106,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'rafael_teste',
-                'endereco' => [
-                    'cep' => '06733-000',
-                    'logradouro' => 'Rua Santa Luzia',
-                    'numero' => '91',
-                    'complemento' => 'Fundos',
+                'regiao_usuario' => [
                     'cidade' => 'Vargem Grande Paulista',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.6167,
                     'longitude' => -47.0219,
@@ -145,12 +117,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'camila_teste',
-                'endereco' => [
-                    'cep' => '06734-000',
-                    'logradouro' => 'Rua dos Cedros',
-                    'numero' => '310',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Vargem Grande Paulista',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5922,
                     'longitude' => -47.0127,
@@ -159,12 +128,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'bruno_teste',
-                'endereco' => [
-                    'cep' => '06650-000',
-                    'logradouro' => 'Rua Horizonte',
-                    'numero' => '44',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Itapevi',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5484,
                     'longitude' => -46.9345,
@@ -173,12 +139,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'beatriz_teste',
-                'endereco' => [
-                    'cep' => '06651-000',
-                    'logradouro' => 'Rua das Violetas',
-                    'numero' => '178',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Itapevi',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5517,
                     'longitude' => -46.9489,
@@ -187,12 +150,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'gabriel_teste',
-                'endereco' => [
-                    'cep' => '06652-000',
-                    'logradouro' => 'Rua Sao Joao',
-                    'numero' => '12',
-                    'complemento' => 'Casa 2',
+                'regiao_usuario' => [
                     'cidade' => 'Itapevi',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5578,
                     'longitude' => -46.9402,
@@ -201,12 +161,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'leticia_teste',
-                'endereco' => [
-                    'cep' => '06653-000',
-                    'logradouro' => 'Rua das Margaridas',
-                    'numero' => '265',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Itapevi',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5426,
                     'longitude' => -46.9541,
@@ -215,12 +172,9 @@ class UsuarioTesteSeeder extends Seeder
             ],
             [
                 'nome' => 'felipe_teste',
-                'endereco' => [
-                    'cep' => '06654-000',
-                    'logradouro' => 'Rua Bela Vista',
-                    'numero' => '98',
-                    'complemento' => null,
+                'regiao_usuario' => [
                     'cidade' => 'Itapevi',
+                    'bairro' => 'teste',
                     'uf' => 'SP',
                     'latitude' => -23.5612,
                     'longitude' => -46.9298,
@@ -238,18 +192,15 @@ class UsuarioTesteSeeder extends Seeder
                     'email' => $usuarioTeste['nome'] . '@mail.com',
                 ]);
 
-                $endereco = Endereco::create([
-                    'cep' => $usuarioTeste['endereco']['cep'],
-                    'logradouro' => $usuarioTeste['endereco']['logradouro'],
-                    'numero' => $usuarioTeste['endereco']['numero'],
-                    'complemento' => $usuarioTeste['endereco']['complemento'],
-                    'cidade' => $usuarioTeste['endereco']['cidade'],
-                    'uf' => $usuarioTeste['endereco']['uf'],
-                    'latitude' => $usuarioTeste['endereco']['latitude'],
-                    'longitude' => $usuarioTeste['endereco']['longitude'],
+                $regiaoUsuario = RegiaoUsuario::create([
+                    'cidade' => $usuarioTeste['regiao_usuario']['cidade'],
+                    'bairro' => 'teste',
+                    'uf' => $usuarioTeste['regiao_usuario']['uf'],
+                    'latitude' => $usuarioTeste['regiao_usuario']['latitude'],
+                    'longitude' => $usuarioTeste['regiao_usuario']['longitude'],
                 ]);
 
-                $usuarioModel->endereco()->associate($endereco);
+                $usuarioModel->regiaoUsuario()->associate($regiaoUsuario);
                 $usuarioModel->save();
 
                 UsuarioTelefone::create([

@@ -40,9 +40,9 @@ class User extends Authenticatable
         return $this->hasOne(UsuarioTelefone::class, 'user_id');
     }
 
-    public function endereco()
+    public function regiaoUsuario()
     {
-        return $this->belongsTo(Endereco::class, 'endereco_id');
+        return $this->belongsTo(RegiaoUsuario::class, 'regiao_usuario_id');
     }
 
     // atribui verdadeiro ou falso à propriedade 'is_admin' aqui da model, que foi agregada ao usuário

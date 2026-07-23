@@ -45,7 +45,7 @@ class AuthController extends Controller
         $user = Auth::user();
 
         $user->load('telefone');
-        $user->load('endereco');
+        $user->load('regiaoUsuario');
 
         $user->tokens()->delete();
 

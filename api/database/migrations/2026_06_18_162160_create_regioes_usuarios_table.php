@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enderecos', function (Blueprint $table) {
+        Schema::create('regioes_usuarios', function (Blueprint $table) {
             $table->id();
-            $table->string('cep');
-            $table->string('logradouro');
-            $table->integer('numero');
-            $table->string('complemento')->nullable();
             $table->string('cidade');
+            $table->string('bairro');
             $table->string('uf');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enderecos');
+        Schema::dropIfExists('regioes_usuarios');
     }
 };

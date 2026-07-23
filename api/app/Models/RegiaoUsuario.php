@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Endereco extends Model
+class RegiaoUsuario extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'enderecos';
+    protected $table = 'regioes_usuarios';
 
     protected $fillable = [
-        'cep',
-        'logradouro',
-        'numero',
-        'complemento',
+        'bairro',
         'cidade',
         'uf',
         'latitude',

@@ -7,6 +7,7 @@ use App\Models\Endereco;
 use App\Models\User;
 use App\Models\UsuarioTelefone;
 use App\Services\CoordenadasService;
+use App\Services\LocalizacaoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -32,7 +33,7 @@ class UsuarioController extends Controller
 
     public function listarPaginados () {
         try {
-            $usuarios = User::with(['telefone', 'endereco'])
+            $usuarios = User::with(['telefone', 'regiaoUsuario'])
                 ->orderBy('name');
 
             $busca = request()->busca;
@@ -44,9 +45,9 @@ class UsuarioController extends Controller
                         ->orWhereHas('telefone', function ($query) use ($busca) {
                             $query->where('telefone', 'like', "%{$busca}%");
                         })
-                        ->orWhereHas('endereco', function ($query) use ($busca) {
-                            $query->where('logradouro', 'like', "%{$busca}%")
-                                ->orWhere('numero', 'like', "%{$busca}%")
+                        ->orWhereHas('regiaoUsuario', function ($query) use ($busca) {
+                            $query
+                                ->orWhere('bairro', 'like', "%{$busca}%")
                                 ->orWhere('cidade', 'like', "%{$busca}%")
                                 ->orWhere('uf', 'like', "%{$busca}%");
                         });
@@ -74,10 +75,8 @@ class UsuarioController extends Controller
             'telefone' => ['nullable', 'string'],
 
             'cep' => ['nullable', 'string'],
-            'logradouro' => ['nullable', 'string'],
-            'num_endereco' => ['nullable', 'integer'],
-            'complemento' => ['nullable', 'string'],
             'cidade' => ['nullable', 'string'],
+            'bairro' => ['nullable', 'string'],
             'uf' => ['nullable', 'string'],
 
             'password' => ['nullable', 'min:8', 'confirmed'],
@@ -144,14 +143,12 @@ class UsuarioController extends Controller
         |
         | endereço todo vazio → não altera
         | começou preencher → exige completar
-        | complemento → opcional
         |
         */
 
         $camposEndereco = [
             'cep',
-            'logradouro',
-            'num_endereco',
+            'bairro',
             'cidade',
             'uf',
         ];
@@ -185,21 +182,18 @@ class UsuarioController extends Controller
             }
 
             $endereco->cep = $dados['cep'];
-            $endereco->logradouro = $dados['logradouro'];
-            $endereco->numero = $dados['num_endereco'];
-            $endereco->complemento = $dados['complemento'] ?? null;
+            $endereco->bairro = $dados['bairro'];
             $endereco->cidade = $dados['cidade'];
             $endereco->uf = $dados['uf'];
 
 
 
             $fullAddress =
-                $dados['logradouro'] . ', ' .
-                $dados['num_endereco'] . ', ' .
+                $dados['bairro'] . ', ' .
                 $dados['cidade'] . ', ' .
                 $dados['uf'] . ', Brasil';
 
-            $coordenadas = app(CoordenadasService::class)->coordenadasPeloEndereco($fullAddress);
+            $coordenadas = app(LocalizacaoService::class)->coordenadasPeloEndereco($fullAddress);
 
             if ($coordenadas) {
                 $endereco->latitude = $coordenadas['latitude'];
@@ -219,16 +213,15 @@ class UsuarioController extends Controller
             'user' => $usuario
                 ->fresh()
                 ->load('telefone')
-                ->load('endereco'),
+                ->load('regiaoUsuario'),
         ]);
     }
 
     public function info()
     {
-        \Log::info('info');
         $usuario = auth()->user();
         $usuario->load('telefone');
-        $usuario->load('endereco');
+        $usuario->load('regiaoUsuario');
 
         return response()->json([
             'usuario' => $usuario

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Doacao\{
     DoacaoOferecidaController,
     DoacaoSolicitadaController,
 };
+use App\Http\Controllers\Api\LocalizacaoController;
 use App\Http\Controllers\Api\ModuloController;
 use App\Http\Controllers\Api\PoliticaPrivacidadeController;
 use App\Http\Controllers\Api\TermoUsoController;
@@ -83,6 +84,8 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
     });
 
     Route::post('/consentimento/aceitar', [ConsentimentoDocumentoController::class, 'aceitar'])->name('consentimento.aceitar');
+
+    Route::get('/buscar-regiao-pelo-cep/{cep}', [LocalizacaoController::class, 'buscarRegiaoPeloCep'])->name('buscarRegiaoPeloCep');
 });
 
 Route::group(['prefix' => 'politica-privacidade'], function(){

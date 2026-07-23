@@ -9,15 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('endereco_id')->nullable()->references('id')->on('enderecos')->nullOnDelete();
+            $table->foreignId('regiao_usuario_id')->nullable()->references('id')->on('regioes_usuarios')->nullOnDelete();
         });
     }
 
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['endereco_id']);
-            $table->dropColumn('endereco_id');
+            $table->dropForeign(['regiao_usuario_id']);
+            $table->dropColumn('regiao_usuario_id');
         });
     }
 };
