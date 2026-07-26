@@ -58,24 +58,29 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
         Route::get('/buscar-doacao/{id}', [DoacaoController::class, 'edit'])->name('doacoes.edit');
 
         // Todos os perfis de doações
-        Route::get('/', [DoacaoController::class, 'index'])->name('doacoes.index');
+        Route::get('/lista', [DoacaoController::class, 'lista'])->name('doacoes.lista');
+        Route::get('/mapa', [DoacaoController::class, 'mapa'])->name('doacoes.mapa');
         Route::post('/store', [DoacaoController::class, 'store'])->name('doacoes.store');
         Route::post('/update/{id}', [DoacaoController::class, 'update'])->name('doacoes.update');
         Route::get('/perfis-doacao', [DoacaoController::class, 'perfisDoacao'])->name('doacoes.perfisDoacao');
 
         // solicitadas
-        Route::group(['prefix' => 'solicitadas'], function(){
-            Route::get('/', [DoacaoSolicitadaController::class, 'index'])->name('doacoes.solicitadas.index');
-            Route::post('/store', [DoacaoSolicitadaController::class, 'store'])->name('doacoes.solicitadas.store');
-            Route::post('/update/{id}', [DoacaoSolicitadaController::class, 'update'])->name('doacoes.solicitadas.update');
-        });
+        // Route::group(['prefix' => 'solicitadas'], function(){
+        //     Route::get('/', [DoacaoSolicitadaController::class, 'index'])->name('doacoes.solicitadas.index');
+        //     Route::post('/store', [DoacaoSolicitadaController::class, 'store'])->name('doacoes.solicitadas.store');
+        //     Route::post('/update/{id}', [DoacaoSolicitadaController::class, 'update'])->name('doacoes.solicitadas.update');
+        //     Route::get('/mapa', [DoacaoSolicitadaController::class, 'doacoesMapa'])->name('doacoes.solicitadas.mapa');
+        //     Route::get('/lista', [DoacaoSolicitadaController::class, 'doacoesLista'])->name('doacoes.solicitadas.lista');
+        // });
         
-        // oferecidas
-        Route::group(['prefix' => 'oferecidas'], function(){
-            Route::get('/', [DoacaoOferecidaController::class, 'index'])->name('doacoes.oferecidas.index');
-            Route::post('/store', [DoacaoOferecidaController::class, 'store'])->name('doacoes.oferecidas.store');
-            Route::post('/update/{id}', [DoacaoOferecidaController::class, 'update'])->name('doacoes.oferecidas.update');
-        });
+        // // oferecidas
+        // Route::group(['prefix' => 'oferecidas'], function(){
+        //     Route::get('/', [DoacaoOferecidaController::class, 'index'])->name('doacoes.oferecidas.index');
+        //     Route::post('/store', [DoacaoOferecidaController::class, 'store'])->name('doacoes.oferecidas.store');
+        //     Route::post('/update/{id}', [DoacaoOferecidaController::class, 'update'])->name('doacoes.oferecidas.update');
+        //     Route::get('/mapa', [DoacaoOferecidaController::class, 'doacoesMapa'])->name('doacoes.oferecidas.mapa');
+        //     Route::get('/lista', [DoacaoOferecidaController::class, 'doacoesLista'])->name('doacoes.oferecidas.lista');
+        // });
     });
 
     // Quando o usuário entra em contato com a equipe

@@ -9,54 +9,48 @@ use App\Models\Doacao\PerfilDoacao;
 class DoacaoService
 {
     public function listar ($filtros) {
-        
         $doacoes = Doacao::with('categoria', 'perfil', 'usuario.regiaoUsuario', 'usuario.telefone');
 
-        if (isset($filtros['statusAtivo'])) {
-            $statusAtivo = filter_var(
-                $filtros['statusAtivo'],
-                FILTER_VALIDATE_BOOLEAN
-            );
-            if (empty($statusAtivo)) {
-                $doacoes = $doacoes->where('ativo', 0);
-            } else {
-                $doacoes = $doacoes->where('ativo', 1);
-            }
-        }
+        // if (isset($filtros['statusAtivo'])) {
+        //     $statusAtivo = filter_var(
+        //         $filtros['statusAtivo'],
+        //         FILTER_VALIDATE_BOOLEAN
+        //     );
+        //     if (empty($statusAtivo)) {
+        //         $doacoes = $doacoes->where('ativo', 0);
+        //     } else {
+        //         $doacoes = $doacoes->where('ativo', 1);
+        //     }
+        // }
 
+        // perfil de doação
         if (isset($filtros['perfil'])) {
             if ((int)$filtros['perfil'] != 0) {
                 $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil']);
             }
         }
 
+        // categoria de doação
         if (isset($filtros['categoria'])) {
             if ((int)$filtros['categoria'] != 0) {
                 $doacoes = $doacoes->where('categoria_doacao_id', $filtros['categoria']);
             }
         }
         
-        if (!auth()->user()->is_admin) {
-            $doacoes = $doacoes->where('user_id', auth()->user()->id);
-        }
-            
         if (isset($filtros['perfil_doacao_id'])) {
-            \Log::info($filtros['perfil_doacao_id']);
             $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil_doacao_id']);
         }
-        
-        $doacoes = $doacoes->paginate(10);
 
         return $doacoes;
     }
 
-    public function criar(array $dados, int $perfilDoacaoId): Doacao
+    public function criar(array $dados): Doacao
     {
         return Doacao::create([
             'detalhes' => $dados['detalhes'] ?? null,
             'categoria_doacao_id' => $dados['categoria_doacao_id'],
-            'perfil_doacao_id' => $perfilDoacaoId,
-            'user_id' => isset($dados['user_id']) ? $dados['user_id'] : auth()->id(),
+            'perfil_doacao_id' => $dados['perfil_doacao_id'],
+            'user_id' => auth()->user()->id,
         ]);
     }
 
@@ -68,7 +62,7 @@ class DoacaoService
             'detalhes' => $dados['detalhes'] ?? null,
             'categoria_doacao_id' => $dados['categoria_doacao_id'],
             'perfil_doacao_id' => $dados['perfil_doacao_id'],
-            'user_id' => $dados['user_id'],
+            'user_id' => auth()->user()->id,
         ]);
 
         return $doacao;

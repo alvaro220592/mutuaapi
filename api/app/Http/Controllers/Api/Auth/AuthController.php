@@ -68,11 +68,6 @@ class AuthController extends Controller
         ]);
 
         if ($response->failed()) {
-            \Log::error('GOOGLE LOGIN - TOKEN INVÁLIDO', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-
             return response()->json(['error' => 'Token inválido'], 401);
         }
 

@@ -148,7 +148,6 @@ class UsuarioController extends Controller
         */
 
         $camposEndereco = [
-            'cep',
             'bairro',
             'cidade',
             'uf',

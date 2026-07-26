@@ -30,8 +30,6 @@ class VerificarConsentimentoDocumentos
         }
 
         if (!$usuario->aceitouUltimosDocumentos()) {
-            \Log::info('nao aceitou');
-
             return response()->json([
                 'codigo' => 'DOCUMENTOS_PENDENTES',
                 'message' => 'É necessário aceitar os Termos de Uso e a Política de Privacidade.'

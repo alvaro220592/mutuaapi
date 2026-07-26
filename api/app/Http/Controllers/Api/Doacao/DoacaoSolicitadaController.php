@@ -29,6 +29,47 @@ class DoacaoSolicitadaController extends Controller
         }
     }
 
+    public function doacoesMapa (Request $request) {
+        try {
+            $dados = $request->all();
+            $dados['perfil_doacao_id'] = PerfilDoacao::ID_SOLICITADA;
+            $doacoes = $this->doacaoService->listar($dados)->get();
+            $perfisDoacao = $this->doacaoService->perfisDoacao();
+            $categoriasDoacao = $this->doacaoService->categoriasDoacao();
+
+            $usuario = auth()->user();
+            $usuario->load('regiaoUsuario');
+
+            return response()->json([
+                'doacoes' => $doacoes,
+                'perfisDoacao' => $perfisDoacao,
+                'categoriasDoacao' => $categoriasDoacao,
+                'usuario' => $usuario,
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function doacoesLista (Request $request) {
+        try {
+            $dados = $request->all();
+            $dados['apenas_meus_registros'] = true;
+            $dados['perfil_doacao_id'] = PerfilDoacao::ID_SOLICITADA;
+            $doacoes = $this->doacaoService->listar($dados)->paginate(10);
+
+            return response()->json(['doacoes' => $doacoes]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         $dados = $request->validate(
