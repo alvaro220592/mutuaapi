@@ -85,8 +85,8 @@ class DoacaoController extends Controller
                 ],
             ],
             [
-                'categoria_doacao_id.required' => 'Selecione uma categoria',
-                'perfil_doacao_id.required' => 'Selecione um perfil para a doação',
+                'categoria_doacao_id.required' => 'Selecione do que se trata a doação',
+                'perfil_doacao_id.required' => 'Selecione se quer doar ou solicitar',
                 'detalhes.required' => 'Para este tipo de doação, os detalhes são obrigatórios',
             ]
         );
