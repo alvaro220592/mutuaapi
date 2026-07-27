@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Doacao\Doacao;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -67,5 +68,9 @@ class User extends Authenticatable
             'politica_privacidade_id' => $politicaPrivacidadeAtual->id,
             'termo_uso_id' => $termoUsoAtual->id,
         ])->exists();
+    }
+
+    public function doacoes () {
+        return $this->hasMany(Doacao::class, 'user_id');
     }
 }

@@ -11,34 +11,30 @@ class DoacaoService
     public function listar ($filtros) {
         $doacoes = Doacao::with('categoria', 'perfil', 'usuario.regiaoUsuario', 'usuario.telefone');
 
-        // if (isset($filtros['statusAtivo'])) {
-        //     $statusAtivo = filter_var(
-        //         $filtros['statusAtivo'],
-        //         FILTER_VALIDATE_BOOLEAN
-        //     );
-        //     if (empty($statusAtivo)) {
-        //         $doacoes = $doacoes->where('ativo', 0);
-        //     } else {
-        //         $doacoes = $doacoes->where('ativo', 1);
-        //     }
-        // }
-
         // perfil de doação
         if (isset($filtros['perfil'])) {
-            if ((int)$filtros['perfil'] != 0) {
-                $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil']);
-            }
+            $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil']);
         }
 
         // categoria de doação
-        if (isset($filtros['categoria'])) {
-            if ((int)$filtros['categoria'] != 0) {
-                $doacoes = $doacoes->where('categoria_doacao_id', $filtros['categoria']);
-            }
+        if (isset($filtros['categorias'])) {
+            $categorias = explode(',', $filtros['categorias']);
+            $doacoes = $doacoes->whereIn('categoria_doacao_id', $categorias);            
         }
         
-        if (isset($filtros['perfil_doacao_id'])) {
-            $doacoes = $doacoes->where('perfil_doacao_id', $filtros['perfil_doacao_id']);
+        if (isset($filtros['usuario'])) {
+            $doacoes = $doacoes->where('user_id', $filtros['usuario']);
+        }
+
+        if (isset($filtros['apenasCategoriasInteresse'])) {
+            $mostrarApenasCategoriasInteresse = filter_var(
+                $filtros['apenasCategoriasInteresse'],
+                FILTER_VALIDATE_BOOLEAN
+            );
+
+            if ($mostrarApenasCategoriasInteresse) {
+                $doacoes = $doacoes->whereIn('categoria_doacao_id', $this->categoriasInteresse());
+            }
         }
 
         return $doacoes;
@@ -66,6 +62,14 @@ class DoacaoService
         ]);
 
         return $doacao;
+    }
+
+    public function categoriasInteresse(){
+        return auth()->user()
+            ->doacoes
+            ->pluck('categoria_doacao_id')
+            ->unique()
+            ->values();
     }
 
     public function mudarStatus (int $id) {

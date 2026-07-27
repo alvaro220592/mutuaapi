@@ -44,7 +44,7 @@ class DoacaoController extends Controller
     public function mapa (Request $request) {
         try {
             $dados = $request->all();
-            
+
             // apenas aqui na listagem por mapa tem que vim registros sempre ativos
             $doacoes = $this->doacaoService
                 ->listar($dados)
