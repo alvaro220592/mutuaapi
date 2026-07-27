@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('perfis_doacao', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->string('descricao');
             $table->boolean('ativo')->default(1);
             $table->timestamps();
             $table->softDeletes();

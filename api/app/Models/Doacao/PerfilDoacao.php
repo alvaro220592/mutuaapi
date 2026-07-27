@@ -11,8 +11,8 @@ class PerfilDoacao extends Model
     
     protected $table = 'perfis_doacao';
 
-    protected $fillable = ['nome', 'ativo'];
+    protected $fillable = ['nome', 'descricao', 'ativo'];
 
-    public const ID_OFERECIDA = 1;
-    public const ID_SOLICITADA = 2;
+    public const int ID_OFERECIDA = 1;
+    public const int ID_SOLICITADA = 2;
 }

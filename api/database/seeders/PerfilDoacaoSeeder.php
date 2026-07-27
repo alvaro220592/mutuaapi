@@ -16,12 +16,18 @@ class PerfilDoacaoSeeder extends Seeder
     {
         $nomes = ['oferecida', 'solicitada'];
 
-        foreach($nomes as $nome){
-            $registroEXistente = PerfilDoacao::where('nome', $nome)->first();
+        $perfis = [
+            ['nome' => 'oferecida', 'descricao' => 'Quero doar algo'],
+            ['nome' => 'solicitada', 'descricao' => 'Preciso de algo'],
+        ];
+
+        foreach($perfis as $perfil){
+            $registroEXistente = PerfilDoacao::where('nome', $perfil['nome'])->first();
 
             if (!$registroEXistente) {
                 PerfilDoacao::create([
-                    'nome' => $nome
+                    'nome' => $perfil['nome'],
+                    'descricao' => $perfil['descricao'],
                 ]);
             }
         }
