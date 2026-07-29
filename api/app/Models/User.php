@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Conversa\Conversa;
+use App\Models\Conversa\Mensagem;
 use App\Models\Doacao\Doacao;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -70,7 +72,18 @@ class User extends Authenticatable
         ])->exists();
     }
 
-    public function doacoes () {
+    public function doacoes()
+    {
         return $this->hasMany(Doacao::class, 'user_id');
+    }
+
+    public function conversas()
+    {
+        return $this->belongsToMany(Conversa::class, 'conversa_usuario');
+    }
+
+    public function mensagens()
+    {
+        return $this->hasMany(Mensagem::class);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ConsentimentoDocumentoController;
 use App\Http\Controllers\Api\ContatoUsuarioController;
+use App\Http\Controllers\Api\ConversaController;
 use App\Http\Controllers\Api\Doacao\{
     CategoriaDoacaoController,
     DoacaoController,
@@ -71,6 +72,10 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
     Route::post('/consentimento/aceitar', [ConsentimentoDocumentoController::class, 'aceitar'])->name('consentimento.aceitar');
 
     Route::get('/buscar-regiao-pelo-cep/{cep}', [LocalizacaoController::class, 'buscarRegiaoPeloCep'])->name('buscarRegiaoPeloCep');
+
+    Route::group(['prefix' => 'conversa'], function(){
+        Route::post('/', [ConversaController::class, 'obterOuCriar']);
+    });
 });
 
 Route::group(['prefix' => 'politica-privacidade'], function(){
