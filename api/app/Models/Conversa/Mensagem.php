@@ -12,15 +12,21 @@ class Mensagem extends Model
 
     protected $table = 'mensagens';
 
-    protected $fillable = ['conversa_id', 'usuario_id', 'mensagem', 'lida_em'];
+    protected $fillable = ['conversa_id', 'user_id', 'mensagem', 'lida_em'];
+
+    protected $appends = ['minha']; // util para a formatação do balão no frontend
 
     public function conversa()
     {
-        return $this->belongsTo(Conversa::class);
+        return $this->belongsTo(Conversa::class, 'conversa_id');
     }
 
     public function usuario()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getMinhaAttribute () {
+        return $this->user_id === auth()->id();
     }
 }

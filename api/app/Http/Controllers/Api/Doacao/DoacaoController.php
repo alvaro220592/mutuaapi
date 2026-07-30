@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Doacao\CategoriaDoacao;
 use App\Models\Doacao\Doacao;
 use App\Models\Doacao\PerfilDoacao;
+use App\Models\Modulo;
 use App\Services\DoacaoService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -58,6 +59,7 @@ class DoacaoController extends Controller
             $usuario->load('regiaoUsuario');
 
             return response()->json([
+                'moduloId' => Modulo::DOACOES,
                 'doacoes' => $doacoes,
                 'perfisDoacao' => $perfisDoacao,
                 'categoriasDoacao' => $categoriasDoacao,

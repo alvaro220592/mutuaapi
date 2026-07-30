@@ -19,4 +19,6 @@ class Modulo extends Model
         'ativo',
         'ordem_exibicao',
     ];
+
+    public const int DOACOES = 1;
 }

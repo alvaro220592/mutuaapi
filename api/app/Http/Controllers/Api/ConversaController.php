@@ -22,13 +22,28 @@ class ConversaController extends Controller
 
     public function obterOuCriar(Request $request)
     {
-        $conversa = $this->conversaService->obterOuCriar(
-            auth()->id(),
-            $request->usuario_doacao_id,
-            $request->modulo_id,
-            $request->referencia_id
-        );
+        try {
+            $conversa = $this->conversaService->obterOuCriar(
+                auth()->id(),
+                $request->usuario_doacao_id,
+                $request->modulo_id,
+                $request->referencia_id
+            );
 
-        return response()->json($conversa);
+            $conversa->load([
+                'mensagens.usuario:id,name'
+            ]);
+
+            \Log::info($conversa);
+
+            return response()->json([
+                'conversa' => $conversa,
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
+            ], 500);
+        }
     }
 }
