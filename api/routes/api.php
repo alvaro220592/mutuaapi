@@ -75,6 +75,7 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
 
     Route::group(['prefix' => 'conversa'], function(){
         Route::post('/', [ConversaController::class, 'obterOuCriar']);
+        Route::post('/enviar-mensagem', [ConversaController::class, 'enviarMensagem']);
     });
 });
 

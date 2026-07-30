@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Conversa\Conversa;
+use App\Models\Conversa\Mensagem;
 use Illuminate\Support\Facades\Http;
 
 class ConversaService
@@ -52,8 +53,12 @@ class ConversaService
         //
     }
 
-    public function enviarMensagem()
+    public function enviarMensagem($conversaId, $mensagem)
     {
-        //
+        return Mensagem::create([
+            'mensagem' => $mensagem,
+            'conversa_id' => $conversaId,
+            'user_id' => auth()->user()->id
+        ]);
     }
 }

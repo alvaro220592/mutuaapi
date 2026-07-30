@@ -34,8 +34,6 @@ class ConversaController extends Controller
                 'mensagens.usuario:id,name'
             ]);
 
-            \Log::info($conversa);
-
             return response()->json([
                 'conversa' => $conversa,
             ]);
@@ -44,6 +42,36 @@ class ConversaController extends Controller
             return response()->json([
                 'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function enviarMensagem(Request $request)
+    {
+        try {
+            $dados = $request->validate(
+                [
+                    'mensagem' => 'required|string|max:500'
+                ],
+                [
+                    'mensagem.required' => 'A mensagem é obrigatória.',
+                    'mensagem.string' => 'A mensagem deve ser um texto.',
+                    'mensagem.max' => 'A mensagem não pode ter mais de 500 caracteres.'
+                ]
+            );
+
+            $this->conversaService->enviarMensagem(
+                $request->conversa_id,
+                $dados['mensagem']
+            );
+
+            return response()->json([
+                'status' => 200
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
+            ]);
         }
     }
 }
