@@ -1,0 +1,4 @@
+app em tempo real
+- instalar reverb
+    php artisan install:broadcasting --reverb
+        escolha yes, yes

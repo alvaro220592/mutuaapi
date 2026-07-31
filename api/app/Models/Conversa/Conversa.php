@@ -12,15 +12,40 @@ class Conversa extends Model
 
     protected $table = 'conversas';
 
-    protected $fillable = ['modulo_id', 'referencia_id'];
+    protected $fillable = ['modulo_id', 'referencia_id', 'assunto'];
+
+    protected $appends = ['ultimaMensagem'];
 
     public function usuarios()
     {
-        return $this->belongsToMany(User::class, 'conversa_usuario');
+        return $this->belongsToMany(
+            User::class,
+            'conversa_usuario',
+            'conversa_id',
+            'user_id'
+        );
+    }
+
+    // o outro usuário da conversa
+    public function outrosUsuarios()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'conversa_usuario',
+            'conversa_id',
+            'user_id'
+        )->where('users.id', '!=', auth()->id());
     }
 
     public function mensagens()
     {
         return $this->hasMany(Mensagem::class);
+    }
+
+    public function getUltimaMensagemAttribute()
+    {
+        return $this->mensagens()
+            ->orderByDesc('id')
+            ->first();
     }
 }

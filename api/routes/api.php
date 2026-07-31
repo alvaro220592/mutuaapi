@@ -74,6 +74,7 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
     Route::get('/buscar-regiao-pelo-cep/{cep}', [LocalizacaoController::class, 'buscarRegiaoPeloCep'])->name('buscarRegiaoPeloCep');
 
     Route::group(['prefix' => 'conversa'], function(){
+        Route::get('/todas-usuario-logado', [ConversaController::class, 'buscarConversasUsuarioLogado']);
         Route::post('/', [ConversaController::class, 'obterOuCriar']);
         Route::post('/enviar-mensagem', [ConversaController::class, 'enviarMensagem']);
     });

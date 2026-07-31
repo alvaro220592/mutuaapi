@@ -3,13 +3,15 @@ services:
     image: nginx:alpine
     container_name: mutuaapi-nginx
 
+    # expose:
+    #   - "80"
+
     volumes:
       - ./api:/var/www/api
       - ./docker/nginx:/etc/nginx/conf.d
 
     depends_on:
       - api
-      - reverb
 
     networks:
       - web
@@ -31,44 +33,8 @@ services:
     container_name: mutuaapi
 
     volumes:
-      - ./api:/var/www/api
-      - /var/www/api/node_modules
-
-    networks:
-      - internal
-
-  reverb:
-    build:
-      context: .
-      dockerfile: docker/api/Dockerfile
-
-    container_name: mutuaapi-reverb
-
-    command: php artisan reverb:start --host=0.0.0.0 --port=8080
-
-    volumes:
-      - ./api:/var/www/api
-
-    depends_on:
-      - api
-
-    networks:
-      - internal
-
-  queue:
-    build:
-      context: .
-      dockerfile: docker/api/Dockerfile
-
-    container_name: mutuaapi-queue
-
-    command: php artisan queue:work
-
-    volumes:
-      - ./api:/var/www/api
-
-    depends_on:
-      - api
+      - ./api:/var/www/api       # seu código continua sincronizado
+      - /var/www/api/node_modules  # node_modules permanece dentro do container, rápido
 
     networks:
       - internal

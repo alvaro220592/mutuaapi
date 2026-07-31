@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('modulo_id')->references('id')->on('modulos')->onDelete('cascade');
             $table->integer('referencia_id');
+            $table->string('assunto');
             $table->timestamps();
             $table->softDeletes();
         });

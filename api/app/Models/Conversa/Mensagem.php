@@ -14,7 +14,12 @@ class Mensagem extends Model
 
     protected $fillable = ['conversa_id', 'user_id', 'mensagem', 'lida_em'];
 
-    protected $appends = ['minha']; // util para a formatação do balão no frontend
+    protected $appends = ['minha', 'dataAmigavel']; // util para a formatação do balão no frontend
+
+    public function getDataAmigavelAttribute()
+    {
+        return $this->created_at->locale('pt_BR')->diffForHumans();
+    }
 
     public function conversa()
     {
@@ -26,7 +31,8 @@ class Mensagem extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function getMinhaAttribute () {
+    public function getMinhaAttribute()
+    {
         return $this->user_id === auth()->id();
     }
 }
