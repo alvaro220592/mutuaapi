@@ -32,6 +32,8 @@ class ConversaController extends Controller
                 $request->assunto,
             );
 
+            $this->conversaService->marcarMensagensComoLidas($conversa);
+
             $conversa->load([
                 'mensagens.usuario:id,name'
             ]);
@@ -92,5 +94,12 @@ class ConversaController extends Controller
                 'message' => 'Erro. Entre em contato com a equipe de desenvolvimento.' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function numeroMensagensNaoLidas()
+    {
+        return response()->json([
+            'numero' => $this->conversaService->numeroMensagensNaoLidas()
+        ]);
     }
 }

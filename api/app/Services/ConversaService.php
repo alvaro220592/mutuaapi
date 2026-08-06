@@ -6,6 +6,7 @@ use App\Events\MensagemEnviada;
 use App\Models\Conversa\Conversa;
 use App\Models\Conversa\Mensagem;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Builder;
 
 class ConversaService
 {
@@ -62,7 +63,7 @@ class ConversaService
             'user_id' => auth()->user()->id
         ]);
 
-        $novaMensagem->load('usuario');
+        $novaMensagem->load('usuario', 'conversa.usuarios');
 
         broadcast(new MensagemEnviada($novaMensagem));
 
@@ -77,5 +78,37 @@ class ConversaService
             })
             ->whereHas('mensagens')
             ->get();
+    }
+
+    public function numeroMensagensNaoLidas(): int
+    {
+        $query = $this->mensagensNaoLidas()->count();
+        return $query;
+    }
+
+    public function mensagensNaoLidas(): Builder
+    {
+        $query = Mensagem::query()
+
+            // que ainda não foi lida
+            ->whereNull('lida_em')
+
+            // enviada por outra pessoa
+            ->where('user_id', '!=', auth()->user()->id)
+
+            // pertencente a uma conversa da qual eu participo
+            ->whereHas('conversa.usuarios', function ($query) {
+                $query->where('users.id', auth()->user()->id);
+            });
+            
+        return $query;
+    }
+
+    public function marcarMensagensComoLidas ($conversa) : void {
+        $this->mensagensNaoLidas()
+            ->where('conversa_id', $conversa->id)
+            ->update([
+                'lida_em' => now()
+            ]);
     }
 }

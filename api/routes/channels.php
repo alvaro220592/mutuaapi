@@ -18,6 +18,6 @@ Broadcast::channel('conversa.{conversaId}', function ($user, $conversaId) {
 });
 
 // canal do usuário
-Broadcast::channel('user.{userId}', function ($user, $userId) {
+Broadcast::channel('usuario.{userId}', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
 });

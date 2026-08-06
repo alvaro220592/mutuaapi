@@ -16,7 +16,8 @@ class MensagemEnviada implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(public Mensagem $mensagem)
-    {}
+    {
+    }
 
     /**
      * Get the channels the event should broadcast on.
@@ -25,9 +26,15 @@ class MensagemEnviada implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('conversa.' . $this->mensagem->conversa_id),
-        ];
+        $canais = [new PrivateChannel('conversa.' . $this->mensagem->conversa_id)];
+
+        foreach ($this->mensagem->conversa->usuarios as $usuario) {
+            $canais[] = new PrivateChannel('usuario.' . $usuario->id);
+        }
+
+        \Log::info($canais);
+
+        return $canais;
     }
 
     public function broadcastAs()
