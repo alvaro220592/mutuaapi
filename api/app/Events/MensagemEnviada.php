@@ -29,10 +29,8 @@ class MensagemEnviada implements ShouldBroadcast
         $canais = [new PrivateChannel('conversa.' . $this->mensagem->conversa_id)];
 
         foreach ($this->mensagem->conversa->usuarios as $usuario) {
-            $canais[] = new PrivateChannel('usuario.' . $usuario->id);
+            $canais[] = new PrivateChannel('App.Models.User.' . $usuario->id);
         }
-
-        \Log::info($canais);
 
         return $canais;
     }
