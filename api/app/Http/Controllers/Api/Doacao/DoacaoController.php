@@ -123,8 +123,9 @@ class DoacaoController extends Controller
     }
 
     public function edit ($id) {
+        $doacao = Doacao::with('categoria', 'usuario', 'perfil')->find($id);
         return response()->json([
-            'doacao' => Doacao::with('categoria', 'usuario', 'perfil')->find($id)
+            'doacao' => $doacao
         ]);
     }
 
