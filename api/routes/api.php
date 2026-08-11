@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Doacao\{
 };
 use App\Http\Controllers\Api\LocalizacaoController;
 use App\Http\Controllers\Api\ModuloController;
+use App\Http\Controllers\Api\NotificacaoController;
 use App\Http\Controllers\Api\PoliticaPrivacidadeController;
 use App\Http\Controllers\Api\TermoUsoController;
 use App\Http\Controllers\Api\UsuarioController;
@@ -78,6 +79,11 @@ Route::middleware(['auth:sanctum', 'documentos'])->group(function(){
         Route::get('/numero-mensagens-nao-lidas', [ConversaController::class, 'numeroMensagensNaoLidas']);
         Route::post('/', [ConversaController::class, 'obterOuCriar']);
         Route::post('/enviar-mensagem', [ConversaController::class, 'enviarMensagem']);
+    });
+
+    Route::group(['prefix' => 'notificacoes'], function(){
+        Route::get('/', [NotificacaoController::class, 'index']);        
+        Route::post('/marcar-como-lidas', [NotificacaoController::class, 'marcarComoLidas']);        
     });
 });
 
