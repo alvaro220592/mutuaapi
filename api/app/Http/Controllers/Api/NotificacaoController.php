@@ -10,16 +10,17 @@ use Illuminate\Support\Facades\Mail;
 
 class NotificacaoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $perPage = $request->input('perPage', 20);
+
             $notificacoes = auth()->user()
                 ->notifications()
                 ->latest()
-                ->limit(20)
-                ->get();
+                ->paginate($perPage);
 
-            $notificacoes->each(function ($notificacao) {
+            $notificacoes->getCollection()->each(function ($notificacao) {
                 $notificacao->setAttribute(
                     'dataAmigavel',
                     $notificacao->created_at
